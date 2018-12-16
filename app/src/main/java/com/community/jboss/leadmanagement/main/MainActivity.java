@@ -10,10 +10,12 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.community.jboss.leadmanagement.BaseActivity;
 import com.community.jboss.leadmanagement.PermissionManager;
 import com.community.jboss.leadmanagement.R;
 import com.community.jboss.leadmanagement.SettingsFragment;
+import com.community.jboss.leadmanagement.SignActivity;
 import com.community.jboss.leadmanagement.main.callrecord.CallRecordFragment;
 import com.community.jboss.leadmanagement.main.contacts.ContactsFragment;
 import com.community.jboss.leadmanagement.main.contacts.editcontact.EditContactActivity;
@@ -212,7 +215,14 @@ public class MainActivity extends BaseActivity
                 if(mAuth.getCurrentUser() != null) {
                     startActivity(new Intent(getApplicationContext(), EditContactActivity.class));
                 }else {
-                    Toast.makeText(this, R.string.not_signed, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view,R.string.not_signed, Snackbar.LENGTH_SHORT)
+                            .setAction(R.string.snackbar_text_sign, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent toSignInActivity = new Intent(MainActivity.this,SignActivity.class);
+                                    startActivity(toSignInActivity);
+                                }
+                            }).show();
                 }
             });
             fab.setImageResource(R.drawable.ic_add_white_24dp);
